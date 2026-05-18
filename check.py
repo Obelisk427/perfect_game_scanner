@@ -37,7 +37,10 @@ def post_discord(webhook: str, content: str) -> None:
     req = urllib.request.Request(
         webhook,
         data=data,
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            "User-Agent": "pg-tournament-alert (github.com/Obelisk427/perfect_game_scanner, 1.0)",
+        },
     )
     with urllib.request.urlopen(req, timeout=30) as resp:
         if resp.status >= 300:
