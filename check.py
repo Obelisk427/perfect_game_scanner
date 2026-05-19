@@ -25,11 +25,33 @@ def fetch(url: str) -> str:
 
 
 def has_schedule_link(html: str, event: str) -> bool:
-    pattern = re.compile(
-        r"TournamentSchedule\.aspx\?event=" + re.escape(event),
+    """Return True if the page links to a schedule/bracket page for this event.
+
+    Matches either of:
+    - a URL like TournamentSchedule.aspx / TournamentBracket.aspx / *Schedule*.aspx /
+      *Bracket*.aspx with ?event=<event>
+    - any <a href="...event=<event>..."> whose visible text contains
+      "schedule" or "bracket" (case-insensitive)
+    """
+    ev = re.escape(event)
+
+    url_pattern = re.compile(
+        r'href\s*=\s*"[^"]*(?:Schedule|Bracket)[^"]*\.aspx\?[^"]*event=' + ev,
         re.IGNORECASE,
     )
-    return bool(pattern.search(html))
+    if url_pattern.search(html):
+        return True
+
+    anchor_pattern = re.compile(
+        r'<a\b[^>]*href\s*=\s*"[^"]*event=' + ev + r'[^"]*"[^>]*>([^<]+)</a>',
+        re.IGNORECASE,
+    )
+    for match in anchor_pattern.finditer(html):
+        text = match.group(1).strip().lower()
+        if "schedule" in text or "bracket" in text:
+            return True
+
+    return False
 
 
 def post_discord(webhook: str, content: str) -> None:
