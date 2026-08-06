@@ -8,7 +8,7 @@ import sys
 import urllib.error
 import urllib.request
 
-TARGET_EVENT = "149426"  # Virginia Beach, 5/23-24/26
+TARGET_EVENT = "151618"
 TEST_EVENT = "146167"    # Completed tournament, used for end-to-end test
 PAGE_URL = "https://www.perfectgame.org/Events/Default.aspx?event={event}"
 SCHEDULE_URL = "https://www.perfectgame.org/Events/TournamentSchedule.aspx?event={event}"

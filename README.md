@@ -3,7 +3,7 @@
 Polls a Perfect Game tournament event page every 15 minutes and pings a Discord
 webhook the first time the **Schedule/Scores** link appears.
 
-- Target event: `149426` (Virginia Beach, 5/23–24/26)
+- Target event: `151618`
 - Test event: `146167` (already completed, used to verify the detector + Discord wiring)
 
 ## Setup
@@ -28,7 +28,7 @@ whole file).
 ## Go live
 
 Once the test works, you're done — the cron runs every 15 min automatically.
-When the schedule is posted for event 149426, you'll get one Discord ping and
+When the schedule is posted for the target event, you'll get one Discord ping and
 `state.json` will be committed with `fired: true` so you won't get duplicates.
 
 ## Run locally (optional)
